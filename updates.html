@@ -1,0 +1,25 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application updates</title>
+    <link rel="stylesheet" href="updates.css">
+</head>
+
+<body>
+    <h1>
+        Application updates
+    </h1>
+    <button type="button" id="update">Update installed applications</button>
+    <script type="module">
+        import { invoke } from "@tauri-apps/api/core";
+
+        document.getElementById("update").onclick = async () => {
+            await invoke("update_flatpaks");
+        }
+
+    </script>
+</body>
+
+</html>
