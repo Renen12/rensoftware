@@ -1,0 +1,37 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extra software</title>
+    <link rel="stylesheet" href="extras.css">
+</head>
+
+<body>
+    <ul class="nav">
+        <li>
+            <a href="/updates.html" id="updates">Updates</a>
+            <a href="/index.html" id="home">Home</a>
+            <a href="/extras.html" id="extras">Extra software bundles</a>
+        </li>
+    </ul>
+    <h1>Extra software bundles</h1>
+    <button type="button" id="steam">Install steam + other useful gaming-related software</button>
+    <script type="module">
+        import { invoke } from "@tauri-apps/api/core";
+        document.getElementById("steam").onclick = async () => {
+            document.getElementById("steam").disabled = true;
+            let tochange = ["extras/extras.html", "updates/updates.html", "home/index.html"]
+            tochange.forEach((id) => {
+                document.getElementById(id.split("/")[0]).href = "javascript:void(0)"
+            });
+            await invoke("steamandothers")
+            document.getElementById("steam").disabled = false;
+            tochange.forEach((id) => {
+                document.getElementById(id.split("/")[0]).href = "/" + id.split("/")[1]
+            });
+        }
+    </script>
+</body>
+
+</html>

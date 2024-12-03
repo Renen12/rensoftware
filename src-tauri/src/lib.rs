@@ -2,6 +2,35 @@ use std::{process::Command, thread};
 
 use tauri::{AppHandle, Emitter, Manager};
 #[tauri::command]
+async fn steamandothers(app: AppHandle) {
+    let thread = thread::spawn(move || {
+        let cmd = Command::new("sh")
+            .args([
+                "-c",
+                "paru -S steamtinkerlaunch protonup-qt --sudo pkexec --noconfirm",
+            ])
+            .status()
+            .unwrap();
+        if cmd.code().unwrap() != 0 {
+            app.get_webview_window("main")
+                .unwrap()
+                .emit("failed_install", ())
+                .unwrap();
+        }
+        let cmd = Command::new("pkexec")
+            .args(["pacman", "-S", "steam", "--noconfirm"])
+            .status()
+            .unwrap();
+        if cmd.code().unwrap() != 0 {
+            app.get_webview_window("main")
+                .unwrap()
+                .emit("failed_install", ())
+                .unwrap();
+        }
+    });
+    thread.join().unwrap();
+}
+#[tauri::command]
 async fn update_flatpaks(app: AppHandle) {
     let thread = thread::spawn(move || {
         let cmd = Command::new("sh")
@@ -82,7 +111,8 @@ pub fn run() {
             get_apps,
             install_app,
             backend_msg,
-            update_flatpaks
+            update_flatpaks,
+            steamandothers
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

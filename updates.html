@@ -12,6 +12,7 @@
         <li>
             <a href="/updates.html" id="updates">Updates</a>
             <a href="/index.html" id="home">Home</a>
+            <a href="/extras.html" id="extras">Extra software bundles</a>
         </li>
     </ul>
     <h1>
@@ -25,10 +26,12 @@
             document.getElementById("update").disabled = true;
             document.getElementById("updates").href = "javascript:void(0)"
             document.getElementById("home").href = "javascript:void(0)"
+            document.getElementById("extras").href = "javascript:void(0)"
             await invoke("update_flatpaks");
             document.getElementById("update").disabled = false;
             document.getElementById("updates").href = "/updates.html"
             document.getElementById("home").href = "/index.html"
+            document.getElementById("extras").href = "/extras.html"
         }
     </script>
 

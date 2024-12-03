@@ -29,12 +29,14 @@ function refresh_apps() {
           });
           document.getElementById("home").href = "javascript:void(0)";
           document.getElementById("updates").href = "javascript:void(0)";
+          document.getElementById("extras").href = "javascript:void(0)"
           await invoke("install_app", { application: button.internal_appid });
           document.querySelectorAll("button").forEach((btn) => {
             btn.disabled = false
           });
           document.getElementById("home").href = "/index.html";
           document.getElementById("updates").href = "/updates.html";
+          document.getElementById("extras").href = "/extras.html"
           alert("Software installation has finished.")
         };
       }
