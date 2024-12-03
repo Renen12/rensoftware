@@ -8,6 +8,12 @@
 </head>
 
 <body>
+    <ul class="nav">
+        <li>
+            <a href="/updates.html" id="updates">Updates</a>
+            <a href="/index.html" id="home">Home</a>
+        </li>
+    </ul>
     <h1>
         Application updates
     </h1>
@@ -16,10 +22,16 @@
         import { invoke } from "@tauri-apps/api/core";
 
         document.getElementById("update").onclick = async () => {
+            document.getElementById("update").disabled = true;
+            document.getElementById("updates").href = "javascript:void(0)"
+            document.getElementById("home").href = "javascript:void(0)"
             await invoke("update_flatpaks");
+            document.getElementById("update").disabled = false;
+            document.getElementById("updates").href = "/updates.html"
+            document.getElementById("home").href = "/index.html"
         }
-
     </script>
+
 </body>
 
 </html>
