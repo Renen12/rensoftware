@@ -23,21 +23,40 @@ function refresh_apps() {
         document.body.appendChild(button);
         document.body.appendChild(document.createElement("br"));
 
-        button.onclick = async () => {
-          document.querySelectorAll("button").forEach((btn) => {
-            btn.disabled = true
-          });
-          document.getElementById("home").href = "javascript:void(0)";
-          document.getElementById("updates").href = "javascript:void(0)";
-          document.getElementById("extras").href = "javascript:void(0)"
-          await invoke("install_app", { application: button.internal_appid });
-          document.querySelectorAll("button").forEach((btn) => {
-            btn.disabled = false
-          });
-          document.getElementById("home").href = "/index.html";
-          document.getElementById("updates").href = "/updates.html";
-          document.getElementById("extras").href = "/extras.html"
-          alert("Software installation has finished.")
+        button.onclick = async (event) => {
+          console.log(event.altKey)
+
+          if (event.altKey == true) {
+            document.querySelectorAll("button").forEach((btn) => {
+              btn.disabled = true
+            });
+            document.getElementById("home").href = "javascript:void(0)";
+            document.getElementById("updates").href = "javascript:void(0)";
+            document.getElementById("extras").href = "javascript:void(0)"
+            await invoke("remove_app", { application: button.internal_appid });
+            document.querySelectorAll("button").forEach((btn) => {
+              btn.disabled = false
+            });
+            document.getElementById("home").href = "/index.html";
+            document.getElementById("updates").href = "/updates.html";
+            document.getElementById("extras").href = "/extras.html"
+            alert("Software uninstallation has finished.")
+          } else {
+            document.querySelectorAll("button").forEach((btn) => {
+              btn.disabled = true
+            });
+            document.getElementById("home").href = "javascript:void(0)";
+            document.getElementById("updates").href = "javascript:void(0)";
+            document.getElementById("extras").href = "javascript:void(0)"
+            await invoke("install_app", { application: button.internal_appid });
+            document.querySelectorAll("button").forEach((btn) => {
+              btn.disabled = false
+            });
+            document.getElementById("home").href = "/index.html";
+            document.getElementById("updates").href = "/updates.html";
+            document.getElementById("extras").href = "/extras.html"
+            alert("Software installation has finished.")
+          }
         };
       }
     });
@@ -79,19 +98,40 @@ async function proceedWithSearch() {
       button.internal_appid = app.split("|")[1];
       document.body.appendChild(button)
       document.body.appendChild(document.createElement("br"));
-      button.onclick = async () => {
-        document.querySelectorAll("button").forEach((btn) => {
-          btn.disabled = true
-        });
-        document.getElementById("home").href = "javascript:void(0)";
-        document.getElementById("updates").href = "javascript:void(0)";
-        await invoke("install_app", { application: button.internal_appid });
-        document.querySelectorAll("button").forEach((btn) => {
-          btn.disabled = false
-        });
-        document.getElementById("home").href = "/index.html";
-        document.getElementById("updates").href = "/updates.html";
-        alert("Software installation has finished.")
+      button.onclick = async (event) => {
+        console.log(event.altKey)
+        if (event.altKey == true) {
+          document.querySelectorAll("button").forEach((btn) => {
+            btn.disabled = true
+          });
+          document.getElementById("home").href = "javascript:void(0)";
+          document.getElementById("updates").href = "javascript:void(0)";
+          document.getElementById("extras").href = "javascript:void(0)"
+          await invoke("remove_app", { application: button.internal_appid });
+          document.querySelectorAll("button").forEach((btn) => {
+            btn.disabled = false
+          });
+          document.getElementById("home").href = "/index.html";
+          document.getElementById("updates").href = "/updates.html";
+          document.getElementById("extras").href = "/extras.html"
+          alert("Software uninstallation has finished.")
+        } else {
+          document.querySelectorAll("button").forEach((btn) => {
+            btn.disabled = true
+          });
+          document.getElementById("home").href = "javascript:void(0)";
+          document.getElementById("updates").href = "javascript:void(0)";
+          document.getElementById("extras").href = "javascript:void(0)"
+          await invoke("install_app", { application: button.internal_appid });
+          document.querySelectorAll("button").forEach((btn) => {
+            btn.disabled = false
+          });
+          document.getElementById("home").href = "/index.html";
+          document.getElementById("updates").href = "/updates.html";
+          document.getElementById("extras").href = "/extras.html"
+          alert("Software installation has finished.")
+        }
+
       };
     });
   });

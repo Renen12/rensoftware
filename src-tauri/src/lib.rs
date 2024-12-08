@@ -2,6 +2,22 @@ use std::{process::Command, thread};
 
 use tauri::{AppHandle, Emitter, Manager};
 #[tauri::command]
+async fn remove_app(app: AppHandle, application: String) {
+    let cmd = Command::new("sh")
+        .args([
+            "-c",
+            format!("flatpak remove {} -y --user", application).as_str(),
+        ])
+        .status()
+        .unwrap();
+    if cmd.code().unwrap() != 0 {
+        app.get_webview_window("main")
+            .unwrap()
+            .emit("failed_install", ())
+            .unwrap();
+    }
+}
+#[tauri::command]
 async fn steamandothers(app: AppHandle) {
     let thread = thread::spawn(move || {
         let cmd = Command::new("sh")
@@ -112,7 +128,8 @@ pub fn run() {
             install_app,
             backend_msg,
             update_flatpaks,
-            steamandothers
+            steamandothers,
+            remove_app
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
